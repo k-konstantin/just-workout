@@ -1,6 +1,6 @@
 import logger from 'logger'
 
-export const init = app => app.use(async (ctx, next) => {
+export default app => app.use(async (ctx, next) => {
 	try {
 		await next()
 
