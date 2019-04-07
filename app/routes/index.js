@@ -4,7 +4,7 @@ import users from './users'
 const router = new Router({ prefix: '/api' })
 
 router
-	.post('/users/create', users.create)
+	.post('/users', users.create)
 
 export default app => {
 	app

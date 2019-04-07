@@ -42,7 +42,7 @@ describe('api/users', () => {
 
 
 
-	describe('POST /create', () => {
+	describe('POST /', () => {
 		let users
 
 		beforeEach(() => {
@@ -61,7 +61,7 @@ describe('api/users', () => {
 		})
 
 		it('should create a user', async () => {
-			const response = await axios.post('/create', users[0])
+			const response = await axios.post('/', users[0])
 
 			expect(response.status).toBe(200)
 
@@ -74,7 +74,7 @@ describe('api/users', () => {
 			it('if email already exist', async () => {
 				try {
 					users[1].email = users[0].email
-					await axios.post('/create', users[1])
+					await axios.post('/', users[1])
 					expect(false).toBe(true)
 				} catch(err) {
 					if (err.response) {
@@ -94,7 +94,7 @@ describe('api/users', () => {
 			it('if email is not valid', async () => {
 				try {
 					users[1].email = 'not valid email'
-					await axios.post('/create', users[1])
+					await axios.post('/', users[1])
 					expect(false).toBe(true)
 				} catch(err) {
 					if (err.response) {
@@ -114,7 +114,7 @@ describe('api/users', () => {
 			it('if no email', async () => {
 				try {
 					delete users[1].email
-					await axios.post('/create', users[1])
+					await axios.post('/', users[1])
 					expect(false).toBe(true)
 				} catch(err) {
 					if (err.response) {
@@ -134,7 +134,7 @@ describe('api/users', () => {
 			it('if no displayName', async () => {
 				try {
 					delete users[1].displayName
-					await axios.post('/create', users[1])
+					await axios.post('/', users[1])
 					expect(false).toBe(true)
 				} catch(err) {
 					if (err.response) {
@@ -154,7 +154,27 @@ describe('api/users', () => {
 			it('if no password', async () => {
 				try {
 					delete  users[1].password
-					await axios.post('/create', users[1])
+					await axios.post('/', users[1])
+					expect(false).toBe(true)
+				} catch(err) {
+					if (err.response) {
+						expect(err.response.status).toBe(400)
+						expect(err.response.data.errors).toEqual({
+							password: ERRORS.REG.PASSWORD_TOO_SHORT
+						})
+
+						const user = await User.findOne({ email: users[1].email})
+						expect(user).toBe(null)
+					} else {
+						throw err
+					}
+				}
+			})
+
+			it('if password less than 4 characters', async () => {
+				try {
+					users[1].password = 'abc'
+					await axios.post('/', users[1])
 					expect(false).toBe(true)
 				} catch(err) {
 					if (err.response) {
@@ -173,7 +193,7 @@ describe('api/users', () => {
 
 			it('if no data', async () => {
 				try {
-					await axios.post('/create')
+					await axios.post('/')
 					expect(false).toBe(true)
 				} catch(err) {
 					if (err.response) {
