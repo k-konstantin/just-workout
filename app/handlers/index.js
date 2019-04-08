@@ -1,5 +1,6 @@
 const handlers = [
 	'static',
+	'cors',
 	'errors',
 	'bodyParser',
 ]

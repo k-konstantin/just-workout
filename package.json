@@ -12,11 +12,12 @@
     "dev": "cross-env NODE_ENV=development nodemon --exec babel-node app/index.js",
     "build": "babel app -d build",
     "eslint": "eslint app/**",
-    "mongod": "mongod --dbpath=\"e:\\data\\db\""
+    "mongod": "mongod --dbpath=\"d:\\data\\db\""
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@koa/cors": "^2.2.3",
     "cross-env": "^5.2.0",
     "koa": "^2.7.0",
     "koa-body": "^4.1.0",
@@ -47,5 +48,8 @@
     ],
     "verbose": true,
     "testEnvironment": "node"
+  },
+  "nodemonConfig": {
+    "ignore": ["client/*"]
   }
 }
