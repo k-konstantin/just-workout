@@ -16,7 +16,7 @@ const form = props => {
 				content='Заполните поля, чтобы зарегистрироваться.'
 			/>
 			<Form
-				error={error}
+				error={!!error}
 				className='attached fluid segment'
 				onSubmit={handleSubmit}
 			>

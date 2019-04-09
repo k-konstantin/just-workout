@@ -5,7 +5,7 @@ import '../../../css/RenderField.css'
 
 const RenderField = ({ input, label, type, meta: { touched, error } }) => (
 	<Form.Field
-		error={touched && error}>
+		error={touched && !!error}>
 		<label>{label}</label>
 		<Input
 			{...input}

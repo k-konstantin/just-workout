@@ -1,15 +1,34 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
+import { Menu } from 'semantic-ui-react'
 
-const Layout = props => (
-	<div>
-		<header>
-			<Link to='/login'>Login</Link>
-			<Link to='/registration'>Registration</Link>
-		</header>
-		<div>{props.children}</div>
-		<footer>Some footer</footer>
-	</div>
-)
+const Layout = props => {
+	console.log(props)
+	return (
+		<div>
+			<header>
+				<Menu inverted>
+					<Link to='/login'>
+						<Menu.Item
+							name='Login'
+							active={props.location.pathname === '/login'}
+							color='olive'
+						/>
+					</Link>
+					<Link to='/registration'>
+						<Menu.Item
+							name='Registration'
+							active={props.location.pathname === '/registration'}
+							color='orange'
+						/>
+					</Link>
+				</Menu>
+			</header>
+			<div>{props.children}</div>
+			<footer>Some footer</footer>
+		</div>
+	)
+}
 
-export default Layout
+export default withRouter(Layout)
