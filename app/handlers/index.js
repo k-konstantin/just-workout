@@ -1,4 +1,5 @@
 const handlers = [
+	'logger',
 	'static',
 	'cors',
 	'errors',
