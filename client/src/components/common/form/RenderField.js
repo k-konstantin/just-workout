@@ -1,13 +1,19 @@
 import React from 'react'
+import { Form, Input } from 'semantic-ui-react'
+
+import '../../../css/RenderField.css'
 
 const RenderField = ({ input, label, type, meta: { touched, error } }) => (
-	<div>
+	<Form.Field
+		error={touched && error}>
 		<label>{label}</label>
-		<div>
-			<input {...input} placeholder={label} type={type} />
-			{touched && error && <span>{error}</span>}
-		</div>
-	</div>
+		<Input
+			{...input}
+			type={type}
+			placeholder={label}
+		/>
+		{touched && error && <small className='helper'>{error}</small>}
+	</Form.Field>
 )
 
 export default RenderField

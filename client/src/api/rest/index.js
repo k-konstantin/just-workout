@@ -13,6 +13,8 @@ export const createUser = values =>
 			let errors = err.response && err.response.data && err.response.data.errors
 			if (!errors) {
 				errors = { _error: 'Internal server error' }
+			} else {
+				errors._error = 'Одно или несколько полей заполнены неверно.'
 			}
 
 			return { errors }
