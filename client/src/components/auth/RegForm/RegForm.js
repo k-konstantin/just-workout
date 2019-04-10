@@ -4,10 +4,15 @@ import { Redirect } from 'react-router'
 
 import api from '../../../api/rest'
 import RegReduxForm from './RegReduxForm'
+import SuccessRegForm from './SuccessRegForm'
 
 class RegForm extends Component {
 	state = {
 		submitSuccess: false,
+		redirect: false,
+	}
+	onSuccessSubmit = () => {
+		this.setState({ redirect: true })
 	}
 	onSubmit = (values, dispatch) => api.createUser(values)
 		.then(response => {
@@ -21,7 +26,11 @@ class RegForm extends Component {
 	render() {
 		return (
 			this.state.submitSuccess ? (
-				<Redirect to='/' />
+				this.state.redirect ? (
+					<Redirect to='/login' />
+				) : (
+					<SuccessRegForm onSubmit={this.onSuccessSubmit} />
+				)
 			) : (
 				<RegReduxForm
 					onSubmit={this.onSubmit}
