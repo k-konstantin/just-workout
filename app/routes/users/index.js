@@ -20,5 +20,28 @@ export default {
 		await sendMail(user)
 
 		ctx.body = _.pick(user, User.publicFields)
-	}
+	},
+	getUserByConfirmToken: async (confirmToken, ctx, next) => {
+		const user = await User.findOne({confirmToken})
+		if (!user) {
+			return ctx.throw(404)
+		}
+
+		ctx.user = user
+		await next()
+	},
+	confirmUser: async (ctx, next) => {
+		const {user} = ctx
+		user.confirmed = true
+		user.confirmToken = null
+		await user.save()
+
+		ctx.body = 'OK'
+	},
+	rejectUser: async (ctx, next) => {
+		const {user} = ctx
+		await user.remove()
+
+		ctx.body = 'Your account was deleted'
+	},
 }
