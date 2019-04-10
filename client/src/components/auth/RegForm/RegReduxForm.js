@@ -1,21 +1,22 @@
 import React from 'react'
 import { Field, reduxForm } from 'redux-form'
-import { Button, Form, Message, Icon } from 'semantic-ui-react'
+import { Button, Form, Message, Icon, Container } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 
 import RenderField from '../../common/form/RenderField'
 
 const form = props => {
-	const { handleSubmit, error } = props
+	const { handleSubmit, error, submitting } = props
 
 	return (
-		<div>
+		<Container>
 			<Message
 				attached
 				header='Регистрация'
 				content='Заполните поля, чтобы зарегистрироваться.'
 			/>
 			<Form
+				loading={submitting}
 				error={!!error}
 				className='attached fluid segment'
 				onSubmit={handleSubmit}
@@ -34,7 +35,7 @@ const form = props => {
 				<Icon name='help' />
 				Already signed up?&nbsp;<Link to='/login'>Login here</Link>&nbsp;instead.
 			</Message>
-		</div>
+		</Container>
 	)
 }
 
