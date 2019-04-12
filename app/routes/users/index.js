@@ -1,8 +1,10 @@
 import _ from 'lodash'
 import uuidv4 from 'uuid/v4'
+import jwt from 'jsonwebtoken'
 
 import User from './models/user'
 import sendMail from './services/sendMail'
+import config from 'config'
 
 export default {
 	create: async (ctx, next) => {
@@ -43,5 +45,10 @@ export default {
 		await user.remove()
 
 		ctx.body = 'Your account was deleted'
+	},
+	login: async (ctx, next) => {
+		const { user: { email, displayName } } = ctx.state
+		const payload = jwt.sign({ email, displayName }, config.jwtSecret, { expiresIn: '3h' })
+		ctx.body = payload
 	},
 }

@@ -3,6 +3,7 @@ const handlers = [
 	'static',
 	'cors',
 	'errors',
+	'passport',
 	'bodyParser',
 ]
 
