@@ -6,9 +6,7 @@ axios.defaults.baseURL = host
 
 export const createUser = values =>
 	axios.post('/api/users', values)
-		.then(response => {
-			return response
-		})
+		.then(response => response)
 		.catch(err => {
 			let errors = err.response && err.response.data && err.response.data.errors
 			if (!errors) {
@@ -20,6 +18,26 @@ export const createUser = values =>
 			return { errors }
 		})
 
+export const loginUser = values =>
+	axios.post('/api/users/login', values)
+		.then(response => response)
+		.catch(err => {
+			let errors
+			if (err.response && err.response.status === 500) {
+				errors = { _error: 'Internal server error' }
+			} else {
+				const { message, email, password } = err.response.data
+				errors = {
+					_error: message ? message : 'Одно или несколько полей не заполнены.',
+					email,
+					password,
+				}
+			}
+
+			return { errors }
+		})
+
 export default {
 	createUser,
+	loginUser,
 }

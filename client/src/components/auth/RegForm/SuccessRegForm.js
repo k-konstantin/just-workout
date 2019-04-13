@@ -8,7 +8,7 @@ const SuccessRegForm = props => {
 	return (
 		<Form success>
 			<Message success header='Вы зарегистрировались' content="Подтвердите регистрацию перейдя по ссылке в пиьсме, отправленном вам на почту." />
-			<Button onClick={onSubmit}>Login</Button>
+			<Button onClick={onSubmit}>To login</Button>
 		</Form>
 	)
 }

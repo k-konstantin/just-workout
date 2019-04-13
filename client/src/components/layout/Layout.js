@@ -4,7 +4,6 @@ import { withRouter } from 'react-router-dom'
 import { Menu } from 'semantic-ui-react'
 
 const Layout = props => {
-	console.log(props)
 	return (
 		<div>
 			<header>
