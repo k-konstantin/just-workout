@@ -48,7 +48,7 @@ export default {
 	},
 	login: async (ctx, next) => {
 		const { user: { email, displayName } } = ctx.state
-		const payload = jwt.sign({ email, displayName }, config.jwtSecret, { expiresIn: '3h' })
-		ctx.body = payload
+		const token = jwt.sign({ email, displayName }, config.jwtSecret, { expiresIn: '3h' })
+		ctx.body = token
 	},
 }

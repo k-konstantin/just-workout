@@ -83,7 +83,7 @@ describe('POST /users/login', () => {
 			user = await User.findOne({ email: users[0].email })
 		})
 
-		it('if passport is omitted with passport default message', async () => {
+		it('if passport is omitted with Unauthorized', async () => {
 			await axios.get(`/confirm/${user.confirmToken}`)
 
 			try {
@@ -98,7 +98,7 @@ describe('POST /users/login', () => {
 			}
 		})
 
-		it('if email is omitted with passport default message', async () => {
+		it('if email is omitted with Unauthorized', async () => {
 			await axios.get(`/confirm/${user.confirmToken}`)
 
 			try {
