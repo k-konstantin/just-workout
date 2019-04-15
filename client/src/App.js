@@ -14,7 +14,7 @@ const App = ({ isAuthenticated }) => (
 				<div>Logout</div>
 			) : (
 				<Fragment>
-					<Route path='/registration' exact component={RegForm} />
+					<Route path='/registration' component={RegForm} />
 					<Route path='/login' exact component={LoginForm} />
 				</Fragment>
 			)}

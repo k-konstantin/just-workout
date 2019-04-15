@@ -1,18 +1,14 @@
 import React, { Component } from 'react'
 import { SubmissionError } from 'redux-form'
-import { Redirect } from 'react-router'
+import { Redirect, withRouter, Switch, Route } from 'react-router'
 
 import api from '../../../api/rest'
 import RegReduxForm from './RegReduxForm'
 import SuccessRegForm from './SuccessRegForm'
 
 class RegForm extends Component {
-	state = {
-		submitSuccess: false,
-		redirect: false,
-	}
 	onSuccessSubmit = () => {
-		this.setState({ redirect: true })
+		this.props.history.push('/login')
 	}
 	onSubmit = (values, dispatch) => api.createUser(values)
 		.then(response => {
@@ -20,24 +16,22 @@ class RegForm extends Component {
 				throw new SubmissionError(response.errors)
 			}
 
-			this.setState({ submitSuccess: true })
+			this.props.history.push('/registration/success')
 		})
 
 	render() {
 		return (
-			this.state.submitSuccess ? (
-				this.state.redirect ? (
-					<Redirect to='/login' />
-				) : (
-					<SuccessRegForm onSubmit={this.onSuccessSubmit} />
-				)
-			) : (
-				<RegReduxForm
-					onSubmit={this.onSubmit}
-				/>
-			)
+			<Switch>
+				<Route path='/registration' exact render={
+					() => <RegReduxForm onSubmit={this.onSubmit} />
+				} />
+				<Route path='/registration/success' exact render={
+					() => <SuccessRegForm onSubmit={this.onSuccessSubmit} />
+				} />
+				<Redirect to='/registration' />
+			</Switch>
 		)
 	}
 }
 
-export default RegForm
+export default withRouter(RegForm)
