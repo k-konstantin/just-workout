@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { SubmissionError } from 'redux-form'
 import { Redirect, withRouter, Switch, Route } from 'react-router'
+import { Container } from 'semantic-ui-react'
 
 import api from '../../../api/rest'
 import RegReduxForm from './RegReduxForm'
@@ -21,15 +22,17 @@ class RegForm extends Component {
 
 	render() {
 		return (
-			<Switch>
-				<Route path='/registration' exact render={
-					() => <RegReduxForm onSubmit={this.onSubmit} />
-				} />
-				<Route path='/registration/success' exact render={
-					() => <SuccessRegForm onSubmit={this.onSuccessSubmit} />
-				} />
-				<Redirect to='/registration' />
-			</Switch>
+			<Container>
+				<Switch>
+					<Route path='/registration' exact render={
+						() => <RegReduxForm onSubmit={this.onSubmit} />
+					} />
+					<Route path='/registration/success' exact render={
+						() => <SuccessRegForm onSubmit={this.onSuccessSubmit} />
+					} />
+					<Redirect to='/registration' />
+				</Switch>
+			</Container>
 		)
 	}
 }

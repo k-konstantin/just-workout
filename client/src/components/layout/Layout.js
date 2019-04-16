@@ -1,13 +1,14 @@
 import React from 'react'
 
 import Header from './Header'
+import 'css/layout.css'
 
 const Layout = props => {
 	return (
-		<div>
+		<div className='layout'>
 			<Header />
-			<div>{props.children}</div>
-			<footer>Some footer</footer>
+			<div className='content'>{props.children}</div>
+			<footer className='footer'>Some footer</footer>
 		</div>
 	)
 }

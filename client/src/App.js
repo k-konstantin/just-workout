@@ -1,22 +1,31 @@
 import React, { Fragment } from 'react'
 import { connect } from 'react-redux'
-import { BrowserRouter, Route } from 'react-router-dom'
+import { BrowserRouter } from 'react-router-dom'
+import { Route, Redirect, Switch } from 'react-router'
 
 import Layout from './components/layout/Layout'
 import RegForm from './components/auth/RegForm/RegForm'
 import LoginForm from './components/auth/LoginForm/LoginForm'
+import Logout from './components/auth/Logout/Logout'
+import MainPage from './components/auth/MainPage/MainPage'
 import { isAuthenticated } from './store/selectors/auth'
 
 const App = ({ isAuthenticated }) => (
 	<BrowserRouter>
 		<Layout>
 			{isAuthenticated ? (
-				<div>Logout</div>
+				<Switch>
+					<Route path='/' exact render={() => <div>Profile Page</div>} />
+					<Route path='/logout' exact component={Logout} />
+					<Redirect to='/' />
+				</Switch>
 			) : (
-				<Fragment>
+				<Switch>
 					<Route path='/registration' component={RegForm} />
 					<Route path='/login' exact component={LoginForm} />
-				</Fragment>
+					<Route path='/' exact component={MainPage} />
+					<Redirect to='/' />
+				</Switch>
 			)}
 		</Layout>
 	</BrowserRouter>

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { SubmissionError } from 'redux-form'
+import { Container } from 'semantic-ui-react'
 
 import api from 'api/rest'
 import LoginReduxForm from './LoginReduxForm'
@@ -17,7 +18,9 @@ class RegForm extends Component {
 
 	render() {
 		return (
-			<LoginReduxForm onSubmit={this.onSubmit} />
+			<Container>
+				<LoginReduxForm onSubmit={this.onSubmit} />
+			</Container>
 		)
 	}
 }
