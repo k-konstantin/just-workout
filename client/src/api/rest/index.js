@@ -1,4 +1,5 @@
 import axios from 'axios'
+import jwt from 'jsonwebtoken'
 
 const host = process.env.NODE_ENV === 'development' ? 'http://localhost:4000/' : '/'
 
@@ -20,7 +21,15 @@ export const createUser = values =>
 
 export const loginUser = values =>
 	axios.post('/api/users/login', values)
-		.then(response => response)
+		.then(response => {
+			const { exp, iat, email, displayName } = jwt.decode(response.data)
+			return {
+				token: response.data,
+				expiredAt: Date.now() + (exp - iat) * 1000,
+				email,
+				displayName,
+			}
+		})
 		.catch(err => {
 			let errors
 			if (err.response && err.response.status === 500) {

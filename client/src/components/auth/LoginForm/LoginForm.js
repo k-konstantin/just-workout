@@ -8,12 +8,12 @@ import actions from 'store/actions/auth'
 
 class RegForm extends Component {
 	onSubmit = (values, dispatch) => api.loginUser(values)
-		.then(response => {
-			if (response.errors) {
-				throw new SubmissionError(response.errors)
+		.then(authData => {
+			if (authData.errors) {
+				throw new SubmissionError(authData.errors)
 			}
 
-			dispatch(actions.loginSuccess(response.data))
+			dispatch(actions.loginSuccess(authData))
 		})
 
 	render() {
