@@ -6,14 +6,14 @@ import api from 'api/rest'
 import LoginReduxForm from './LoginReduxForm'
 import actions from 'store/actions/auth'
 
-class RegForm extends Component {
+class LoginForm extends Component {
 	onSubmit = (values, dispatch) => api.loginUser(values)
-		.then(authData => {
-			if (authData.errors) {
-				throw new SubmissionError(authData.errors)
+		.then(({ errors, displayName, email, token, expiredAt }) => {
+			if (errors) {
+				throw new SubmissionError(errors)
 			}
 
-			dispatch(actions.loginSuccess(authData))
+			dispatch(actions.loginSuccess({ displayName, email, token, expiredAt }))
 		})
 
 	render() {
@@ -25,4 +25,4 @@ class RegForm extends Component {
 	}
 }
 
-export default RegForm
+export default LoginForm
