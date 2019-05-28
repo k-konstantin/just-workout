@@ -7,48 +7,48 @@ import sendMail from './services/sendMail'
 import config from 'config'
 
 export default {
-	create: async (ctx, next) => {
-		const fields = _.pick(ctx.request.body, User.requiredFields)
+    create: async (ctx, next) => {
+        const fields = _.pick(ctx.request.body, User.requiredFields)
 
-		User.requiredVirtuals.forEach(virtual => {
-			fields[virtual] = fields[virtual] ? fields[virtual] : ''
-		})
+        User.requiredVirtuals.forEach(virtual => {
+            fields[virtual] = fields[virtual] ? fields[virtual] : ''
+        })
 
-		const user = new User(fields)
+        const user = new User(fields)
 
-		user.confirmToken = uuidv4()
+        user.confirmToken = uuidv4()
 
-		await user.save()
-		await sendMail(user)
+        await user.save()
+        await sendMail(user)
 
-		ctx.body = _.pick(user, User.publicFields)
-	},
-	getUserByConfirmToken: async (confirmToken, ctx, next) => {
-		const user = await User.findOne({confirmToken})
-		if (!user) {
-			return ctx.throw(404)
-		}
+        ctx.body = _.pick(user, User.publicFields)
+    },
+    getUserByConfirmToken: async (confirmToken, ctx, next) => {
+        const user = await User.findOne({confirmToken})
+        if (!user) {
+            return ctx.throw(404)
+        }
 
-		ctx.user = user
-		await next()
-	},
-	confirmUser: async (ctx, next) => {
-		const {user} = ctx
-		user.confirmed = true
-		user.confirmToken = null
-		await user.save()
+        ctx.user = user
+        await next()
+    },
+    confirmUser: async (ctx, next) => {
+        const {user} = ctx
+        user.confirmed = true
+        user.confirmToken = null
+        await user.save()
 
-		ctx.body = 'OK'
-	},
-	rejectUser: async (ctx, next) => {
-		const {user} = ctx
-		await user.remove()
+        ctx.body = 'OK'
+    },
+    rejectUser: async (ctx, next) => {
+        const {user} = ctx
+        await user.remove()
 
-		ctx.body = 'Your account was deleted'
-	},
-	login: async (ctx, next) => {
-		const { user: { email, displayName } } = ctx.state
-		const token = jwt.sign({ email, displayName }, config.jwtSecret, { expiresIn: '3h' })
-		ctx.body = token
-	},
+        ctx.body = 'Your account was deleted'
+    },
+    login: async (ctx, next) => {
+        const { user: { email, displayName } } = ctx.state
+        const token = jwt.sign({ email, displayName }, config.jwtSecret, { expiresIn: '3h' })
+        ctx.body = token
+    },
 }
