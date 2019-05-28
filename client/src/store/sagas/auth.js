@@ -5,33 +5,33 @@ import actions from 'store/actions/auth'
 import localApi from 'api/local'
 
 function* onLoginSuccess(action) {
-	const { token, expiredAt } = action.payload
+    const { token, expiredAt } = action.payload
 
-	yield call(localApi.setToken, { token, expiredAt })
+    yield call(localApi.setToken, { token, expiredAt })
 
-	const task = yield fork(logoutOnTokenExpired, expiredAt - Date.now())
+    const task = yield fork(logoutOnTokenExpired, expiredAt - Date.now())
 
-	yield take(actionTypes.LOGOUT)
-	yield cancel(task)
-	yield call(localApi.removeToken)
+    yield take(actionTypes.LOGOUT)
+    yield cancel(task)
+    yield call(localApi.removeToken)
 }
 
 function* logoutOnTokenExpired(ms) {
-	yield delay(ms)
-	yield put(actions.logout())
+    yield delay(ms)
+    yield put(actions.logout())
 }
 
 function* checkTokenStatus(action) {
-	const { expiredAt, token } = action.payload
+    const { expiredAt, token } = action.payload
 
-	if (Date.now() < expiredAt) {
-		yield put(actions.loginSuccess({ token, expiredAt }))
-	} else {
-		yield put(actions.logout())
-	}
+    if (Date.now() < expiredAt) {
+        yield put(actions.loginSuccess({ token, expiredAt }))
+    } else {
+        yield put(actions.logout())
+    }
 }
 
 export default [
-	takeEvery(actionTypes.LOGIN_SUCCESS, onLoginSuccess),
-	takeEvery(actionTypes.CHECK_TOKEN_STATUS, checkTokenStatus),
+    takeEvery(actionTypes.LOGIN_SUCCESS, onLoginSuccess),
+    takeEvery(actionTypes.CHECK_TOKEN_STATUS, checkTokenStatus),
 ]

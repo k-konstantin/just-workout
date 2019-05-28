@@ -6,17 +6,17 @@ import rootReducer from './reducers'
 import rootSaga from './sagas'
 
 export default function configureStore(preloadedState) {
-	const sagaMiddleware = createSagaMiddleware()
+    const sagaMiddleware = createSagaMiddleware()
 
-	const middlewares = [sagaMiddleware]
-	const middlewareEnhancer = applyMiddleware(...middlewares)
+    const middlewares = [sagaMiddleware]
+    const middlewareEnhancer = applyMiddleware(...middlewares)
 
-	const enhancers = [middlewareEnhancer]
-	const composedEnhancers = composeWithDevTools(...enhancers)
+    const enhancers = [middlewareEnhancer]
+    const composedEnhancers = composeWithDevTools(...enhancers)
 
-	const store = createStore(rootReducer, preloadedState, composedEnhancers)
+    const store = createStore(rootReducer, preloadedState, composedEnhancers)
 
-	sagaMiddleware.run(rootSaga)
+    sagaMiddleware.run(rootSaga)
 
-	return store
+    return store
 }

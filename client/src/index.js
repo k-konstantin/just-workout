@@ -10,10 +10,10 @@ const rootElement =  document.getElementById('root')
 const store = configureStore()
 
 render(
-	<Provider store={store}>
-		<App />
-	</Provider>,
-	rootElement
+    <Provider store={store}>
+        <App />
+    </Provider>,
+    rootElement
 )
 
 // If you want your app to work offline and load faster, you can change
