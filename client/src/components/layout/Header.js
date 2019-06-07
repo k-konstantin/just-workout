@@ -40,15 +40,25 @@ const Header = props => {
                             </Menu.Menu>
                         </Fragment>
                     ) : (
-                        <Menu.Menu position='right'>
-                            <Link to='/logout'>
-                                <Menu.Item
-                                    name='Logout'
-                                    position='right'
-                                    color='red'
-                                />
-                            </Link>
-                        </Menu.Menu>
+                        <Fragment>
+                            <Menu.Menu>
+                                <Link to='/exercises'>
+                                    <Menu.Item
+                                        name='Exercises'
+                                        active={props.location.pathname === '/exercises'}
+                                        color='green'
+                                    />
+                                </Link>
+                            </Menu.Menu>
+                            <Menu.Menu position='right'>
+                                <Link to='/logout'>
+                                    <Menu.Item
+                                        name='Logout'
+                                        color='red'
+                                    />
+                                </Link>
+                            </Menu.Menu>
+                        </Fragment>
                     )}
                 </Container>
             </Menu>

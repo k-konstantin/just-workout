@@ -7,6 +7,7 @@ import Layout from './components/layout/Layout'
 import RegForm from './components/auth/RegForm/RegForm'
 import LoginForm from './components/auth/LoginForm/LoginForm'
 import Logout from './components/auth/Logout/Logout'
+import Exercises from './components/exercises/Exercises'
 import MainPage from './components/auth/MainPage/MainPage'
 import { isAuthenticated, getToken, getExpiredAt } from './store/selectors/auth'
 import { checkTokenStatus } from './store/actions/auth';
@@ -29,6 +30,7 @@ class App extends Component {
                         <Switch>
                             <Route path='/' exact render={() => <div>Profile Page</div>} />
                             <Route path='/logout' exact component={Logout} />
+                            <Route path='/exercises' exact component={Exercises} />
                             <Redirect to='/' />
                         </Switch>
                     ) : (
