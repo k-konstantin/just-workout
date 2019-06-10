@@ -1,10 +1,6 @@
 import axios from 'axios'
 import jwt from 'jsonwebtoken'
 
-const host = process.env.NODE_ENV === 'development' ? 'http://localhost:4000/' : '/'
-
-axios.defaults.baseURL = host
-
 export const createUser = values =>
     axios.post('/api/users', values)
         .then(response => response)
